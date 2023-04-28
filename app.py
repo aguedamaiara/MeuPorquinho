@@ -4,6 +4,7 @@ Ele exibe uma saudação simples e uma mensagem de boas-vindas.
 """
 import streamlit as st
 
-st.title("Meu primeiro aplicativo web data 28/04/2023")
+st.title("Meu primeiro aplicativo web ")
 
-st.write("Olá, mundo!")
+st.write("Lofi!")
+st.video("https://www.youtube.com/live/jfKfPfyJRdk?feature=share")
