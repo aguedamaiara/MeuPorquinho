@@ -7,4 +7,4 @@ import streamlit as st
 st.title("Meu primeiro aplicativo web ")
 
 st.write("Lofi!")
-st.video("https://www.youtube.com/live/jfKfPfyJRdk?feature=share")
+st.video("https://youtu.be/vC4dLeqnvAw")
