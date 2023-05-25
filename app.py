@@ -4,7 +4,19 @@ Ele exibe uma saudação simples e uma mensagem de boas-vindas.
 """
 import streamlit as st
 
-st.title("Meu primeiro aplicativo web - Banco de Dados 2")
-st.title("Data: 28/04/2023")
-st.write("TEST 2!")
-st.video("https://youtu.be/vC4dLeqnvAw")
+# Título da aplicação
+st.title("Minha primeira aplicação com Streamlit")
+
+# Adicione um texto
+st.write("Olá, mundo!")
+
+# Adicione um gráfico
+import pandas as pd
+import numpy as np
+df = pd.DataFrame(np.random.randn(20, 3), columns=['A', 'B', 'C'])
+st.line_chart(df)
+
+# Adicione um botão
+if st.button('Saudação'):
+    st.write('Olá, Streamlit!')
+
