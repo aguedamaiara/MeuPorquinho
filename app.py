@@ -21,6 +21,7 @@ def criar_tabelas(conn):
         CREATE TABLE IF NOT EXISTS Gasto (
             id_gasto INTEGER PRIMARY KEY,
             valor REAL,
+            descricao TEXT,
             data TEXT,
             id_usuario INTEGER,
             FOREIGN KEY (id_usuario) REFERENCES Usuario (id_usuario)
@@ -37,23 +38,22 @@ def adicionar_usuario(conn, nome, salario_mensal):
     st.success('Usuário adicionado com sucesso!')
 
 # Função para adicionar um gasto
-def adicionar_gasto(conn, valor, data, id_usuario):
+def adicionar_gasto(conn, valor, descricao, data, id_usuario):
     cursor = conn.cursor()
-    cursor.execute('INSERT INTO Gasto (valor, data, id_usuario) VALUES (?, ?, ?)', (valor, data, id_usuario))
+    cursor.execute('INSERT INTO Gasto (valor, descricao, data, id_usuario) VALUES (?, ?, ?, ?)', (valor, descricao, data, id_usuario))
     conn.commit()
     st.success('Gasto adicionado com sucesso!')
 
-# Função para visualizar os gastos de um usuário
-# Função para visualizar os gastos de um usuário
+# Função para visualizar os gastos registrados no sistema
 def visualizar_gastos(conn):
     cursor = conn.cursor()
-    cursor.execute('SELECT id_gasto, valor, data FROM Gasto')
+    cursor.execute('SELECT valor, descricao, data FROM Gasto')
     gastos = cursor.fetchall()
     if gastos:
-        st.subheader('Gastos')
+        st.subheader('Gastos Registrados')
         for gasto in gastos:
-            st.write('ID:', gasto[0])
-            st.write('Valor:', gasto[1])
+            st.write('Valor:', gasto[0])
+            st.write('Descrição:', gasto[1])
             st.write('Data:', gasto[2])
             st.write('---')
     else:
@@ -76,16 +76,16 @@ def exibir_interface():
     with st.form('adicionar_gasto_form'):
         st.header('Adicionar Gasto')
         valor = st.number_input('Valor', min_value=0.0)
+        descricao = st.text_input('Descrição')
         data = st.date_input('Data')
         id_usuario_gasto = st.number_input('ID do Usuário')
-        if st.form_submit_button('Adicionar Gasto') and valor and data and id_usuario_gasto:
-            adicionar_gasto(conn, valor, str(data), id_usuario_gasto)
+        if st.form_submit_button('Adicionar Gasto') and valor and descricao and data and id_usuario_gasto:
+            adicionar_gasto(conn, valor, descricao, str(data), id_usuario_gasto)
 
     with st.form('visualizar_gastos_form'):
         st.header('Visualizar Gastos')
-        id_usuario_visualizacao = st.number_input('ID do Usuário')
-        if st.form_submit_button('Visualizar Gastos') and id_usuario_visualizacao:
-            visualizar_gastos(conn, id_usuario_visualizacao)
+        if st.form_submit_button('Visualizar Gastos'):
+            visualizar_gastos(conn)
 
     conn.close()
 
