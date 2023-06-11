@@ -44,15 +44,17 @@ def adicionar_gasto(conn, valor, data, id_usuario):
     st.success('Gasto adicionado com sucesso!')
 
 # Função para visualizar os gastos de um usuário
-def visualizar_gastos(conn, id_usuario):
+# Função para visualizar os gastos de um usuário
+def visualizar_gastos(conn):
     cursor = conn.cursor()
-    cursor.execute('SELECT valor, data FROM Gasto WHERE id_usuario = ?', (id_usuario,))
+    cursor.execute('SELECT id_gasto, valor, data FROM Gasto')
     gastos = cursor.fetchall()
     if gastos:
         st.subheader('Gastos')
         for gasto in gastos:
-            st.write('Valor:', gasto[0])
-            st.write('Data:', gasto[1])
+            st.write('ID:', gasto[0])
+            st.write('Valor:', gasto[1])
+            st.write('Data:', gasto[2])
             st.write('---')
     else:
         st.warning('Nenhum gasto encontrado.')
