@@ -48,11 +48,18 @@ def buscar_id_usuario(conn, nome):
         return None
 
 # Função para adicionar um gasto
-def adicionar_gasto(conn, valor, descricao, data):
+# Função para adicionar um gasto
+def adicionar_gasto(conn, valor, descricao, data, nome_usuario):
     cursor = conn.cursor()
-    cursor.execute('INSERT INTO Gasto (valor, descricao, data, id_usuario) VALUES (?, ?, ?, ?)', (valor, descricao, data, buscar_id_usuario(conn, "Nome do usuário")))
+    id_usuario = buscar_id_usuario(conn, nome_usuario)
+    if id_usuario is None:
+        st.error(f'Usuário "{nome_usuario}" não encontrado.')
+        return
+    cursor.execute('INSERT INTO Gasto (valor, descricao, data, id_usuario) VALUES (?, ?, ?, ?)', (valor, descricao, data, id_usuario))
     conn.commit()
     st.success('Gasto adicionado com sucesso!')
+
+
 
 # Função para visualizar os gastos registrados no sistema
 def visualizar_gastos(conn):
