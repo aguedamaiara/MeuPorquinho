@@ -59,8 +59,6 @@ def adicionar_gasto(conn, valor, descricao, data, nome_usuario):
     st.success('Gasto adicionado com sucesso!')
 
 
-
-
 # Função para visualizar os gastos registrados no sistema
 def visualizar_gastos(conn):
     cursor = conn.cursor()
@@ -90,14 +88,14 @@ def exibir_interface():
         if st.form_submit_button('Adicionar Usuário') and nome and salario_mensal:
             adicionar_usuario(conn, nome, salario_mensal)
 
- with st.form('adicionar_gasto_form'):
-    st.header('Adicionar Gasto')
-    valor = st.number_input('Valor', min_value=0.0)
-    descricao = st.text_input('Descrição')
-    data = st.date_input('Data')
-    if st.form_submit_button('Adicionar Gasto') and valor and descricao and data:
-        nome_usuario = "Nome do usuário"  # Substitua pelo nome real do usuário
-        adicionar_gasto(conn, valor, descricao, str(data), nome_usuario)
+    with st.form('adicionar_gasto_form'):
+        st.header('Adicionar Gasto')
+        valor = st.number_input('Valor', min_value=0.0)
+        descricao = st.text_input('Descrição')
+        data = st.date_input('Data')
+        if st.form_submit_button('Adicionar Gasto') and valor and descricao and data:
+            nome_usuario = "Nome do usuário"  # Substitua pelo nome real do usuário
+            adicionar_gasto(conn, valor, descricao, str(data), nome_usuario)
 
     with st.form('visualizar_gastos_form'):
         st.header('Visualizar Gastos')
