@@ -1,4 +1,3 @@
-
 """
 Este módulo contém o código para o meu aplicativo Streamlit.
 Ele exibe inputs e permite gravação de dados.
@@ -99,46 +98,41 @@ def visualizar_gastos(id_usuario):
 st.title('Meu Porquinho - App de Planejamento Financeiro')
 
 # Página de adicionar usuário
-if st.sidebar.button('Adicionar Usuário'):
-    st.sidebar.subheader('Adicionar Usuário')
-    nome = st.sidebar.text_input('Nome')
-    salario_mensal = st.sidebar.number_input('Salário Mensal', min_value=0.0)
-    if nome and salario_mensal:
-        adicionar_usuario(nome, salario_mensal)
+st.header('Adicionar Usuário')
+nome = st.text_input('Nome')
+salario_mensal = st.number_input('Salário Mensal', min_value=0.0)
+if st.button('Adicionar Usuário') and nome and salario_mensal:
+    adicionar_usuario(nome, salario_mensal)
 
 # Página de adicionar gasto
-if st.sidebar.button('Adicionar Gasto'):
-    st.sidebar.subheader('Adicionar Gasto')
-    valor = st.sidebar.number_input('Valor', min_value=0.0)
-    data = st.sidebar.date_input('Data')
-    id_usuario = st.sidebar.number_input('ID do Usuário')
-    if valor and data and id_usuario:
-        adicionar_gasto(valor, str(data), id_usuario)
+st.header('Adicionar Gasto')
+valor = st.number_input('Valor', min_value=0.0)
+data = st.date_input('Data')
+id_usuario_gasto = st.number_input('ID do Usuário')
+if st.button('Adicionar Gasto') and valor and data and id_usuario_gasto:
+    adicionar_gasto(valor, str(data), id_usuario_gasto)
 
 # Página de adicionar despesa
-if st.sidebar.button('Adicionar Despesa'):
-    st.sidebar.subheader('Adicionar Despesa')
-    valor = st.sidebar.number_input('Valor', min_value=0.0)
-    id_categoria = st.sidebar.number_input('ID da Categoria')
-    id_usuario = st.sidebar.number_input('ID do Usuário')
-    if valor and id_categoria and id_usuario:
-        adicionar_despesa(valor, id_categoria, id_usuario)
+st.header('Adicionar Despesa')
+valor = st.number_input('Valor', min_value=0.0)
+id_categoria = st.number_input('ID da Categoria')
+id_usuario_despesa = st.number_input('ID do Usuário')
+if st.button('Adicionar Despesa') and valor and id_categoria and id_usuario_despesa:
+    adicionar_despesa(valor, id_categoria, id_usuario_despesa)
 
 # Página de adicionar meta
-if st.sidebar.button('Adicionar Meta'):
-    st.sidebar.subheader('Adicionar Meta')
-    nome = st.sidebar.text_input('Nome')
-    valor = st.sidebar.number_input('Valor', min_value=0.0)
-    id_usuario = st.sidebar.number_input('ID do Usuário')
-    if nome and valor and id_usuario:
-        adicionar_meta(nome, valor, id_usuario)
+st.header('Adicionar Meta')
+nome = st.text_input('Nome')
+valor = st.number_input('Valor', min_value=0.0)
+id_usuario_meta = st.number_input('ID do Usuário')
+if st.button('Adicionar Meta') and nome and valor and id_usuario_meta:
+    adicionar_meta(nome, valor, id_usuario_meta)
 
 # Página de visualizar gastos
-if st.sidebar.button('Visualizar Gastos'):
-    st.sidebar.subheader('Visualizar Gastos')
-    id_usuario = st.sidebar.number_input('ID do Usuário')
-    if id_usuario:
-        visualizar_gastos(id_usuario)
+st.header('Visualizar Gastos')
+id_usuario_visualizacao = st.number_input('ID do Usuário')
+if st.button('Visualizar Gastos') and id_usuario_visualizacao:
+    visualizar_gastos(id_usuario_visualizacao)
 
 # Fecha a conexão com o banco de dados
 conn.close()
