@@ -37,10 +37,20 @@ def adicionar_usuario(conn, nome, salario_mensal):
     conn.commit()
     st.success('Usuário adicionado com sucesso!')
 
-# Função para adicionar um gasto
-def adicionar_gasto(conn, valor, descricao, data, id_usuario):
+# Função para buscar o ID do usuário com base no nome
+def buscar_id_usuario(conn, nome):
     cursor = conn.cursor()
-    cursor.execute('INSERT INTO Gasto (valor, descricao, data, id_usuario) VALUES (?, ?, ?, ?)', (valor, descricao, data, id_usuario))
+    cursor.execute('SELECT id_usuario FROM Usuario WHERE nome = ?', (nome,))
+    resultado = cursor.fetchone()
+    if resultado:
+        return resultado[0]
+    else:
+        return None
+
+# Função para adicionar um gasto
+def adicionar_gasto(conn, valor, descricao, data):
+    cursor = conn.cursor()
+    cursor.execute('INSERT INTO Gasto (valor, descricao, data, id_usuario) VALUES (?, ?, ?, ?)', (valor, descricao, data, buscar_id_usuario(conn, "Nome do usuário")))
     conn.commit()
     st.success('Gasto adicionado com sucesso!')
 
@@ -78,9 +88,8 @@ def exibir_interface():
         valor = st.number_input('Valor', min_value=0.0)
         descricao = st.text_input('Descrição')
         data = st.date_input('Data')
-        id_usuario_gasto = st.number_input('ID do Usuário')
-        if st.form_submit_button('Adicionar Gasto') and valor and descricao and data and id_usuario_gasto:
-            adicionar_gasto(conn, valor, descricao, str(data), id_usuario_gasto)
+        if st.form_submit_button('Adicionar Gasto') and valor and descricao and data:
+            adicionar_gasto(conn, valor, descricao, str(data))
 
     with st.form('visualizar_gastos_form'):
         st.header('Visualizar Gastos')
