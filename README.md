@@ -1,3 +1,3 @@
 # TestPython
 
-Link do Streamlit: https://maiaraagueda-meuporquinho-app-4y8b8s.streamlit.app/
+Link do Streamlit: https://maiaraagueda-meuporquinho-app-evcygg.streamlit.app/
