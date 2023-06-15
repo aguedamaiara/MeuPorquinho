@@ -87,6 +87,9 @@ def exibir_interface():
 
     st.title('Meu Porquinho - App de Planejamento Financeiro')
 
+    # Adicionando a imagem
+    st.image('https://ibb.co/MfC9GB1')
+
     with st.form('adicionar_usuario_form'):
         st.header('Adicionar Usuário')
         nome = st.text_input('Nome')
