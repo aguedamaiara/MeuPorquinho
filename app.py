@@ -99,8 +99,8 @@ def exibir_interface():
         valor = st.number_input('Valor', min_value=0.0)
         descricao = st.text_input('Descrição')
         data = st.date_input('Data')
-        if st.form_submit_button('Adicionar Gasto') and valor and descricao and data:
-            nome_usuario = obter_nome_usuario()  # Obtém o nome do usuário real
+        nome_usuario = st.text_input('Nome do usuário')
+        if st.form_submit_button('Adicionar Gasto') and valor and descricao and data and nome_usuario:
             adicionar_gasto(conn, valor, descricao, str(data), nome_usuario)
 
     with st.form('visualizar_gastos_form'):
@@ -109,12 +109,6 @@ def exibir_interface():
             visualizar_gastos(conn)
 
     conn.close()
-
-
-# Obtém o nome do usuário real
-def obter_nome_usuario():
-    st.session_state['nome_usuario'] = st.text_input('Nome do usuário')
-    return st.session_state['nome_usuario']
 
 
 exibir_interface()
