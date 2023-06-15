@@ -85,10 +85,12 @@ def exibir_interface():
     conn = criar_conexao()
     criar_tabelas(conn)
 
+   # Adicionando a imagem
+    st.image('https://i.imgur.com/XBNjQCE.png')
+    
     st.title('Meu Porquinho - App de Planejamento Financeiro')
 
-    # Adicionando a imagem
-    st.image('https://i.imgur.com/XBNjQCE.png')
+ 
 
     with st.form('adicionar_usuario_form'):
         st.header('Adicionar Usuário')
