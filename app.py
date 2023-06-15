@@ -1,3 +1,9 @@
+"""
+Meu Porquinho - App de Planejamento Financeiro
+
+Este aplicativo permite aos usuários adicionar informações sobre seus gastos e visualizar os gastos registrados.
+"""
+
 import sqlite3
 import streamlit as st
 
@@ -94,7 +100,7 @@ def exibir_interface():
         descricao = st.text_input('Descrição')
         data = st.date_input('Data')
         if st.form_submit_button('Adicionar Gasto') and valor and descricao and data:
-            nome_usuario = "Nome do usuário"  # Substitua pelo nome real do usuário
+            nome_usuario = obter_nome_usuario()  # Obtém o nome do usuário real
             adicionar_gasto(conn, valor, descricao, str(data), nome_usuario)
 
     with st.form('visualizar_gastos_form'):
@@ -103,5 +109,12 @@ def exibir_interface():
             visualizar_gastos(conn)
 
     conn.close()
+
+
+# Obtém o nome do usuário real
+def obter_nome_usuario():
+    st.session_state['nome_usuario'] = st.text_input('Nome do usuário')
+    return st.session_state['nome_usuario']
+
 
 exibir_interface()
