@@ -85,10 +85,6 @@ def exibir_interface():
     conn = criar_conexao()
     criar_tabelas(conn)
 
-   # Adicionando uma imagem local
-    image = open('/workspaces/MeuPorquinho/logo.png', 'rb')
-    st.image(image, caption='Imagem Local')
-    
     st.title('Meu Porquinho - App de Planejamento Financeiro')
 
     with st.form('adicionar_usuario_form'):
