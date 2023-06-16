@@ -59,7 +59,7 @@ def adicionar_gasto(conn, valor, descricao, data, nome_usuario):
     st.success('Gasto adicionado com sucesso!')
 
 
-# Função para visualizar os gastos registrados no sistema para um usuário específico
+# Função para visualizar os gastos registrados no sistema para um usuário específico( tentativa 1)
 def visualizar_gastos_usuario(conn, nome_usuario):
     cursor = conn.cursor()
     id_usuario = buscar_id_usuario(conn, nome_usuario)
