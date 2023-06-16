@@ -59,7 +59,7 @@ def adicionar_gasto(conn, valor, descricao, data, nome_usuario):
     st.success('Gasto adicionado com sucesso!')
 
 
-# Função para visualizar os gastos registrados no sistema para um usuário específico( tentativa 1)
+# Função para visualizar os gastos registrados no sistema para um usuário específico
 def visualizar_gastos_usuario(conn, nome_usuario):
     cursor = conn.cursor()
     id_usuario = buscar_id_usuario(conn, nome_usuario)
@@ -77,6 +77,14 @@ def visualizar_gastos_usuario(conn, nome_usuario):
             st.write('---')
     else:
         st.warning(f'Nenhum gasto encontrado para {nome_usuario}.')
+
+# Função para buscar todos os nomes de usuários no banco de dados
+def buscar_nomes_usuarios(conn):
+    cursor = conn.cursor()
+    cursor.execute('SELECT nome FROM Usuario')
+    nomes = cursor.fetchall()
+    nomes = [nome[0] for nome in nomes]
+    return nomes
 
 # Interface com Streamlit
 def exibir_interface():
@@ -106,8 +114,8 @@ def exibir_interface():
 
     with st.form('visualizar_gastos_form'):
         st.header('Visualizar Gastos')
-        usuarios = ['Usuário 1', 'Usuário 2', 'Usuário 3']
-        nome_usuario = st.radio('Selecione um usuário', usuarios)
+        nomes_usuarios = buscar_nomes_usuarios(conn)
+        nome_usuario = st.radio('Selecione um usuário', nomes_usuarios)
         if st.form_submit_button('Visualizar Gastos'):
             visualizar_gastos_usuario(conn, nome_usuario)
 
