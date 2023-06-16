@@ -1,9 +1,3 @@
-"""
-Meu Porquinho - App de Planejamento Financeiro
-
-Este aplicativo permite aos usuários adicionar informações sobre seus gastos e visualizar os gastos registrados.
-"""
-
 import sqlite3
 import streamlit as st
 
@@ -65,32 +59,34 @@ def adicionar_gasto(conn, valor, descricao, data, nome_usuario):
     st.success('Gasto adicionado com sucesso!')
 
 
-# Função para visualizar os gastos registrados no sistema
-def visualizar_gastos(conn):
+# Função para visualizar os gastos registrados no sistema para um usuário específico
+def visualizar_gastos_usuario(conn, nome_usuario):
     cursor = conn.cursor()
-    cursor.execute('SELECT valor, descricao, data FROM Gasto')
+    id_usuario = buscar_id_usuario(conn, nome_usuario)
+    if id_usuario is None:
+        st.error(f'Usuário "{nome_usuario}" não encontrado.')
+        return
+    cursor.execute('SELECT valor, descricao, data FROM Gasto WHERE id_usuario = ?', (id_usuario,))
     gastos = cursor.fetchall()
     if gastos:
-        st.subheader('Gastos Registrados')
+        st.subheader(f'Gastos Registrados para {nome_usuario}')
         for gasto in gastos:
             st.write('Valor:', gasto[0])
             st.write('Descrição:', gasto[1])
             st.write('Data:', gasto[2])
             st.write('---')
     else:
-        st.warning('Nenhum gasto encontrado.')
+        st.warning(f'Nenhum gasto encontrado para {nome_usuario}.')
 
 # Interface com Streamlit
 def exibir_interface():
     conn = criar_conexao()
     criar_tabelas(conn)
 
-   # Adicionando a imagem
+    # Adicionando a imagem
     st.image('https://i.imgur.com/XBNjQCE.png')
     
     st.title('Meu Porquinho - App de Planejamento Financeiro')
-
- 
 
     with st.form('adicionar_usuario_form'):
         st.header('Adicionar Usuário')
@@ -110,8 +106,10 @@ def exibir_interface():
 
     with st.form('visualizar_gastos_form'):
         st.header('Visualizar Gastos')
+        usuarios = ['Usuário 1', 'Usuário 2', 'Usuário 3']
+        nome_usuario = st.radio('Selecione um usuário', usuarios)
         if st.form_submit_button('Visualizar Gastos'):
-            visualizar_gastos(conn)
+            visualizar_gastos_usuario(conn, nome_usuario)
 
     conn.close()
 
